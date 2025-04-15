@@ -55,7 +55,7 @@ npm run dev
 ```bash
 cd frontend-mui
 # ou
-cd frontend-antd
+cd frontend-ant
 ```
 
 2. Instale as dependências do projeto:
