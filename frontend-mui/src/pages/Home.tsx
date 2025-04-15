@@ -77,6 +77,8 @@ export default function Home() {
         <img src="https://i.postimg.cc/Z5dnLzkW/internet.png" alt="Portfolio" style={{ width: 20, opacity: 0.8, verticalAlign: 'middle' }} />
       </a>
     </Typography>
+    <br />
+    <br />
       </>
   );
 }

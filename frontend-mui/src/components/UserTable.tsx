@@ -32,7 +32,7 @@ export default function UserTable({ users, onEdit, onDelete }: Props) {
 
   return (
     <>
-      <TextField
+      <TextField sx={{ mt: 4, mb: 4 }} 
         label="Buscar por nome ou email"
         fullWidth
         margin="normal"
