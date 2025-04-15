@@ -1,6 +1,4 @@
-// src/components/EditUserModal.tsx
-
-import { Modal, Form, Input, Button } from 'antd';
+import { Modal, Form, Input } from 'antd';
 import { useEffect } from 'react';
 import { User } from '../types/User';
 
@@ -23,7 +21,7 @@ export const EditUserModal: React.FC<EditUserModalProps> = ({ visible, onClose, 
   const handleOk = async () => {
     try {
       const values = await form.validateFields();
-      onSave({ ...user!, ...values }); // atualiza o usuário
+      onSave({ ...user!, ...values });
       form.resetFields();
     } catch (error) {
       console.error('Erro ao validar o formulário', error);

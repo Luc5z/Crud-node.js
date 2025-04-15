@@ -5,6 +5,7 @@ import {
   Typography,
   TextField,
   Button,
+  Stack,
 } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { User } from '../types/User';
@@ -17,18 +18,32 @@ type Props = {
 };
 
 export default function EditUserModal({ open, onClose, user, onSubmit }: Props) {
-  const { register, handleSubmit, reset } = useForm<User>();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<User>({
+    defaultValues: user || { name: '', email: '', age: 0 },
+  });
 
   useEffect(() => {
     if (user) reset(user);
   }, [user, reset]);
 
-  const handleFormSubmit = (data: User) => {
+  const handleSave = (data: User) => {
     onSubmit(data);
+    reset();
+    onClose();
+  };
+
+  const handleCancel = () => {
+    reset();
+    onClose();
   };
 
   return (
-    <Modal open={open} onClose={onClose}>
+    <Modal open={open} onClose={handleCancel}>
       <Box sx={{
         position: 'absolute',
         top: '50%', left: '50%',
@@ -37,26 +52,35 @@ export default function EditUserModal({ open, onClose, user, onSubmit }: Props) 
         boxShadow: 24,
         p: 4,
         borderRadius: 2,
-        width: 400
+        width: 400,
       }}>
         <Typography variant="h6" mb={2}>Editar Usuário</Typography>
-        <form onSubmit={handleSubmit(handleFormSubmit)}>
-          <TextField
-            fullWidth label="Nome" {...register('name')}
-            margin="normal"
-          />
-          <TextField
-            fullWidth label="Email" {...register('email')}
-            margin="normal"
-          />
-          <TextField
-            fullWidth type="number" label="Idade"
-            {...register('age', { valueAsNumber: true })}
-            margin="normal"
-          />
-          <Button type="submit" variant="contained" fullWidth sx={{ mt: 2 }}>
-            Salvar
-          </Button>
+        <form onSubmit={handleSubmit(handleSave)}>
+          <Stack spacing={2}>
+            <TextField
+              fullWidth label="Nome" {...register('name', { required: 'Nome obrigatório' })}
+              error={!!errors.name}
+              helperText={errors.name?.message}
+            />
+            <TextField
+              fullWidth label="Email" {...register('email', { required: 'Email obrigatório' })}
+              error={!!errors.email}
+              helperText={errors.email?.message}
+            />
+            <TextField
+              fullWidth type="number" label="Idade"
+              {...register('age', {
+                required: 'Idade obrigatória',
+                valueAsNumber: true,
+              })}
+              error={!!errors.age}
+              helperText={errors.age?.message}
+            />
+            <Stack direction="row" spacing={2} justifyContent="flex-end" mt={1}>
+              <Button variant="outlined" onClick={handleCancel}>Cancelar</Button>
+              <Button variant="contained" type="submit">Salvar</Button>
+            </Stack>
+          </Stack>
         </form>
       </Box>
     </Modal>
