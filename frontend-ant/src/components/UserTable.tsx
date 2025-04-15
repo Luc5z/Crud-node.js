@@ -66,7 +66,19 @@ const UserTable: React.FC<Props> = ({ users, onEdit, onDelete }) => {
           bordered
           size="middle"
           onRow={(record) => ({
-            onClick: () => handleView(record),
+            onClick: (event) => {
+              const target = event.target as HTMLElement;
+
+              if (
+                target.closest("button") ||
+                target.closest(".ant-popover") ||
+                target.closest(".ant-popconfirm")
+              ) {
+                return;
+              }
+
+              handleView(record);
+            },
             style: { cursor: "pointer" },
           })}
         >
@@ -105,11 +117,14 @@ const UserTable: React.FC<Props> = ({ users, onEdit, onDelete }) => {
                     Deletar
                   </Button>
                 </Popconfirm>
-
               </Space>
             )}
           />
         </Table>
+
+        <p style={{ marginTop: 16, textAlign: "center" }}>
+          Clique em uma linha da tabela para visualizar os detalhes do usuário.
+        </p>
 
         <ViewUserModal
           user={selectedUser}
