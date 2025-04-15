@@ -4,7 +4,6 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { User } from "../types/User";
 import { useEffect } from "react";
-import { Agent } from "http";
 
 const schema = z.object({
   name: z.string().min(1, "Nome é obrigatório"),

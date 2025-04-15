@@ -29,7 +29,17 @@ export const EditUserModal: React.FC<EditUserModalProps> = ({ visible, onClose, 
   };
 
   return (
-    <Modal title="Editar Usuário" open={visible} onOk={handleOk} onCancel={onClose} okText="Salvar">
+    <Modal
+      title="Editar Usuário"
+      open={visible}
+      onOk={handleOk}
+      onCancel={onClose}
+      okText="Salvar"
+      cancelText="Cancelar"
+      okButtonProps={{
+        style: { backgroundColor: '#52c41a', borderColor: '#52c41a', color: 'white' }
+      }}
+    >
       <Form form={form} layout="vertical">
         <Form.Item name="name" label="Nome" rules={[{ required: true, message: 'Insira o nome' }]}>
           <Input />
